@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Toko Online Sports</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #1c1f40, #2c3e50, #2980b9);
+      color: #f0f8ff;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header {
+      background: linear-gradient(90deg, #00c3ff, #8000ff);
+      color: #fff;
+      padding: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    }
+
+    header img {
+      width: 100px;
+      height: auto;
+      margin-right: 1rem;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2rem;
+      text-shadow: 0 0 10px #00c3ff, 0 0 20px #8000ff;
+    }
+
+    .login-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: linear-gradient(135deg, #1c1f40, #2c3e50, #2980b9);
+      color: #f0f8ff;
+    }
+
+    .login-form {
+      background: #2e4e6e;
+      padding: 2rem;
+      border-radius: 10px;
+      border: 2px solid #00c3ff;
+      box-shadow: 0 4px 20px rgba(0, 195, 255, 0.5);
+      width: 300px;
+      text-align: center;
+    }
+
+    .login-form input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 20px;
+      border: 2px solid #00c3ff;
+      background: #1f3050;
+      color: #f0f8ff;
+    }
+
+    .login-form button {
+      background-color: #8000ff;
+      border: none;
+      color: #fff;
+      font-weight: bold;
+      text-shadow: 0 0 10px #8000ff;
+      padding: 10px;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+
+    .login-form button:hover {
+      box-shadow: 0 0 15px #8000ff;
+    }
+
+    .message {
+      margin-top: 10px;
+      font-size: 1.2rem;
+      color: red;
+      display: none;
+    }
+
+    .admin-content {
+      display: none;
+    }
+
+    .btn-add-to-cart {
+      background-color: #6a5acd;
+      color: #fff;
+      border: none;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      border-radius: 20px;
+      margin-top: 1rem;
+      transition: transform 0.2s ease, box-shadow 0.3s ease;
+      font-weight: bold;
+      text-shadow: 0 0 10px #6a5acd;
+    }
+
+    .btn-add-to-cart:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 15px #6a5acd;
+    }
+
+    .product-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      padding: 2rem;
+      justify-items: center;
+    }
+
+    .product {
+      background: linear-gradient(145deg, #1f3050, #2e4e6e);
+      border: 2px solid #00c3ff;
+      border-radius: 15px;
+      text-align: center;
+      padding: 1rem;
+      box-shadow: 0 4px 20px rgba(0, 195, 255, 0.5);
+    }
+
+    .product img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 12px;
+      border: 2px solid #8000ff;
+    }
+
+    .product h3 {
+      font-size: 1.3rem;
+      margin: 0.5rem 0;
+      color: #00c3ff;
+      text-shadow: 0 0 10px #00c3ff;
+    }
+
+    .product p {
+      font-size: 1rem;
+      color: #f0f8ff;
+    }
+
+    .product .price {
+      font-size: 1.5rem;
+      color: #fff;
+      margin-top: 1rem;
+      text-shadow: 0 0 10px #8000ff;
+    }
+
+    .cart-summary {
+      background: linear-gradient(145deg, #2e4e6e, #1f3050);
+      color: #f0f8ff;
+      padding: 20px;
+      border-radius: 15px;
+      border: 2px solid #8000ff;
+      box-shadow: 0 4px 20px rgba(128, 0, 255, 0.5);
+      max-width: 400px;
+      margin: 0 auto;
+    }
+
+    .cart-summary h3 {
+      margin-top: 0;
+      color: #00c3ff;
+      text-shadow: 0 0 10px #00c3ff;
+    }
+
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .cart-item img {
+      width: 50px;
+      height: 50px;
+      border-radius: 10px;
+      margin-right: 10px;
+    }
+
+    .cart-item span {
+      flex: 1;
+    }
+
+    .cart-item button {
+      background-color: #8000ff;
+      color: #fff;
+      border: none;
+      padding: 0.3rem 0.7rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: bold;
+      margin-left: 5px;
+    }
+
+    .cart-item button:hover {
+      box-shadow: 0 0 10px #8000ff;
+    }
+
+    .intro-text {
+      text-align: center;
+      color: #fff;
+      font-weight: bold;
+      font-size: 1.8rem;
+      margin-top: 2rem;
+      text-shadow: 0 0 15px #00c3ff, 0 0 20px #8000ff;
+    }
+
+    .payment-section {
+      margin-top: 1rem;
+    }
+
+    .payment-section label {
+      font-weight: bold;
+      color: #00c3ff;
+    }
+
+    .payment-section input {
+      width: 95%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 20px;
+      border: 2px solid #00c3ff;
+      background: #1f3050;
+      color: #f0f8ff;
+    }
+
+    .payment-section button {
+      background-color: #8000ff;
+      border: none;
+      color: #fff;
+      font-weight: bold;
+      text-shadow: 0 0 10px #8000ff;
+    }
+
+    .payment-section button:hover {
+      box-shadow: 0 0 15px #8000ff;
+    }
+
+    #message {
+      margin-top: 1rem;
+      font-size: 1.2rem;
+      text-align: center;
+    }
+
+    .success {
+      color: #00c3ff;
+      text-shadow: 0 0 10px #00c3ff;
+    }
+
+    .error {
+      color: #8000ff;
+      text-shadow: 0 0 10px #8000ff;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <img src="logo.webp" alt="Logo Aurora">
+    <h1>Online Sports</h1>
+  </header>
+
+  <!-- Login Admin -->
+  <div id="admin-login" class="login-container">
+    <form class="login-form" onsubmit="adminLogin(event)">
+      <h2>Login Admin</h2>
+      <input type="text" id="admin-username" placeholder="Username" required />
+      <input type="password" id="admin-password" placeholder="Password" required />
+      <button type="submit">Login</button>
+      <p id="login-message" class="message"></p>
+    </form>
+  </div>
+
+  <div class="content" id="store-content" style="display:none;">
+    <p class="intro-text">Selamat Datang Di Online Sports!</p>
+    <div class="product-container">
+        <!-- Baris pertama -->
+        <div class="product">
+          <img src="bola.jpg" alt="Sepatu Bola">
+          <h3>Sepatu Bola adidas Predator</h3>
+          <p class="price">Rp 1.500.000</p>
+          <button class="btn-add-to-cart" onclick="addToCart('Sepatu Bola adidas Predator', 1500000, 'bola.jpg')">Tambah ke Keranjang</button>
+        </div>
+        <div class="product">
+          <img src="bola2.jpg" alt="Sepatu Bola">
+          <h3>Sepatu Bola Adidas Predator</h3>
+          <p class="price">Rp 1.350.000</p>
+          <button class="btn-add-to-cart" onclick="addToCart('Sepatu Bola Adidas Predator', 1350000, 'bola2.jpg')">Tambah ke Keranjang</button>
+        </div>
+        <div class="product">
+          <img src="bola3.jpeg" alt="Sepatu Bola">
+          <h3>Sepatu Bola Adidas Predator</h3>
+          <p class="price">Rp 1.200.000</p>
+          <button class="btn-add-to-cart" onclick="addToCart('Sepatu Bola Adidas Predator', 1200000, 'bola3.jpeg')">Tambah ke Keranjang</button>
+        </div>
+        <div class="product">
+          <img src="bola4.jpeg" alt="Sepatu Bola">
+          <h3>Sepatu Bola Nike Mercurial</h3>
+          <p class="price">Rp 2.150.000</p>
+          <button class="btn-add-to-cart" onclick="addToCart('Sepatu Bola Nike Mercurial', 2150000, 'bola4.jpeg')">Tambah ke Keranjang</button>
+        </div>
+        <div class="product">
+          <img src="bola5.jpeg" alt="Sepatu Bola">
+          <h3>Sepatu Bola Puma Future 7</h3>
+          <p class="price">Rp 1.300.000</p>
+          <button class="btn-add-to-cart" onclick="addToCart('DSepatu Bola Puma Future 7', 1300000, 'bola5.jpeg')">Tambah ke Keranjang</button>
+        </div>
+      </div>
+
+      <div class="product-container">
+      <!-- Baris kedua -->
+      <div class="product">
+        <img src="volly.jpeg" alt="Sepatu Futsal">
+        <h3>Mizuno Wave Momentum 3</h3>
+        <p class="price">Rp 1.500.000</p>
+        <button class="btn-add-to-cart" onclick="addToCart('Mizuno Wave Momentum 3', 1500000,'volly.jpeg')">Tambah ke Keranjang</button>
+      </div>
+      <div class="product">
+        <img src="volly2.jpeg" alt="Sepatu Futsal">
+        <h3>Mizuno Wave Momentum Mid</h3>
+        <p class="price">Rp 1.200.000</p>
+        <button class="btn-add-to-cart" onclick="addToCart('Mizuno Wave Momentum Mid', 1200000,'volly2.jpeg')">Tambah ke Keranjang</button>
+      </div>
+      <div class="product">
+        <img src="volly3.jpeg" alt="Sepatu Futsal">
+        <h3>Mizuno Wave Momentum 2</h3>
+        <p class="price">Rp 1.550.000</p>
+        <button class="btn-add-to-cart" onclick="addToCart('Mizuno Wave Momentum 2', 1550000,'volly3.jpeg')">Tambah ke Keranjang</button>
+      </div>
+      <div class="product">
+        <img src="volly4.jpeg" alt="Sepatu Futsal">
+        <h3>Mizuno Wave Momentum 3</h3>
+        <p class="price">Rp 1.200.000</p>
+        <button class="btn-add-to-cart" onclick="addToCart('Mizuno Wave Momentum 3', 1200000,'volly4.jpeg')">Tambah ke Keranjang</button>
+      </div>
+      <div class="product">
+        <img src="volly5.jpeg" alt="Sepatu Futsal">
+        <h3>Mizuno Wave Momentum 3</h3>
+        <p class="price">Rp 1.250.000</p>
+        <button class="btn-add-to-cart" onclick="addToCart('Mizuno Wave Momentum 3', 1250000,'volly5.jpeg')">Tambah ke Keranjang</button>
+      </div>
+    </div>
+
+    <div class="cart-summary" id="cart-summary">
+        <h3>Keranjang Belanja</h3>
+        <div id="cart-items"></div>
+        <div class="total-price">
+          Total: Rp <span id="total-price">0</span>
+        </div>
+        <div class="payment-section">
+          <label for="payment-amount">Masukkan Uang Pembayaran:</label>
+          <input type="number" id="payment-amount" placeholder="Enter payment amount" />
+          <button onclick="processPayment()">Bayar</button>
+        </div>
+        <p id="message"></p>
+      </div>
+    </div>
+  
+    <script>
+      let totalPrice = 0;
+      const cartItems = {};
+  
+      function addToCart(itemName, itemPrice, itemImage) {
+        if (cartItems[itemName]) {
+          cartItems[itemName].quantity++;
+        } else {
+          cartItems[itemName] = { price: itemPrice, quantity: 1, image: itemImage };
+        }
+        updateCartSummary();
+      }
+  
+      function updateCartSummary() {
+        const cartItemsContainer = document.getElementById("cart-items");
+        cartItemsContainer.innerHTML = "";
+        totalPrice = 0;
+  
+        Object.keys(cartItems).forEach(itemName => {
+          const item = cartItems[itemName];
+          const cartItemElement = document.createElement("div");
+          cartItemElement.className = "cart-item";
+          cartItemElement.innerHTML = `
+            <img src="${item.image}" alt="${itemName}">
+            <span>${itemName}</span>
+            <span>Rp ${(item.price * item.quantity).toLocaleString()} (${item.quantity})</span>
+            <button onclick="updateItemQuantity('${itemName}', 1)">+</button>
+            <button onclick="updateItemQuantity('${itemName}', -1)">-</button>
+            <button onclick="removeItem('${itemName}')">Hapus</button>
+          `;
+          cartItemsContainer.appendChild(cartItemElement);
+          totalPrice += item.price * item.quantity;
+        });
+  
+        document.getElementById("total-price").innerText = totalPrice.toLocaleString();
+      }
+  
+      function updateItemQuantity(itemName, change) {
+        if (cartItems[itemName]) {
+          cartItems[itemName].quantity += change;
+          if (cartItems[itemName].quantity <= 0) {
+            delete cartItems[itemName];
+          }
+        }
+        updateCartSummary();
+      }
+  
+      function removeItem(itemName) {
+        delete cartItems[itemName];
+        updateCartSummary();
+      }
+  
+      function processPayment() {
+        const paymentInput = document.getElementById("payment-amount");
+        const paymentAmount = parseFloat(paymentInput.value);
+        const message = document.getElementById("message");
+  
+        if (isNaN(paymentAmount) || paymentAmount <= 0) {
+          message.textContent = "Masukkan jumlah pembayaran yang valid!";
+          message.className = "error";
+        } else if (paymentAmount < totalPrice) {
+          message.textContent = `Pembayaran kurang!`;
+          message.className = "error";
+        } else {
+          const change = paymentAmount - totalPrice;
+          message.textContent = `Pembayaran berhasil! Kembalian Anda: Rp ${change.toLocaleString()}.`;
+          message.className = "success";
+        }
+      }
+    </script>
+  <script>
+    let cart = [];
+
+    function adminLogin(event) {
+      event.preventDefault();
+      const username = document.getElementById('admin-username').value;
+      const password = document.getElementById('admin-password').value;
+      if (username === "admin" && password === "admin123") {
+        document.getElementById('store-content').style.display = 'block';
+        document.getElementById('admin-login').style.display = 'none';
+        document.getElementById('login-message').style.display = 'none';
+      } else {
+        document.getElementById('login-message').textContent = "Invalid credentials!";
+        document.getElementById('login-message').style.display = 'block';
+      }
+    }
+
+    function addToCart(itemName, itemPrice, itemImage) {
+      if (cartItems[itemName]) {
+        cartItems[itemName].quantity++;
+      } else {
+        cartItems[itemName] = { price: itemPrice, quantity: 1, image: itemImage };
+      }
+      updateCartSummary();
+    }
+
+    function updateCartSummary() {
+      const cartItemsContainer = document.getElementById("cart-items");
+      cartItemsContainer.innerHTML = "";
+      totalPrice = 0;
+
+      Object.keys(cartItems).forEach(itemName => {
+        const item = cartItems[itemName];
+        const cartItemElement = document.createElement("div");
+        cartItemElement.className = "cart-item";
+        cartItemElement.innerHTML = `
+          <img src="${item.image}" alt="${itemName}">
+          <span>${itemName}</span>
+          <span>Rp ${(item.price * item.quantity).toLocaleString()} (${item.quantity})</span>
+          <button onclick="updateItemQuantity('${itemName}', 1)">+</button>
+          <button onclick="updateItemQuantity('${itemName}', -1)">-</button>
+          <button onclick="removeItem('${itemName}')">Hapus</button>
+        `;
+        cartItemsContainer.appendChild(cartItemElement);
+        totalPrice += item.price * item.quantity;
+      });
+
+      document.getElementById("total-price").innerText = totalPrice.toLocaleString();
+    }
+
+    function updateItemQuantity(itemName, change) {
+      if (cartItems[itemName]) {
+        cartItems[itemName].quantity += change;
+        if (cartItems[itemName].quantity <= 0) {
+          delete cartItems[itemName];
+        }
+      }
+      updateCartSummary();
+    }
+    function removeItem(itemName) {
+      delete cartItems[itemName];
+      updateCartSummary();
+    }
+
+    function processPayment() {
+      const paymentInput = document.getElementById("payment-amount");
+      const paymentAmount = parseFloat(paymentInput.value);
+      const message = document.getElementById("message");
+
+      if (isNaN(paymentAmount) || paymentAmount <= 0) {
+        message.textContent = "Masukkan jumlah pembayaran yang valid!";
+        message.className = "error";
+      } else if (paymentAmount < totalPrice) {
+        message.textContent = `Pembayaran kurang!`;
+        message.className = "error";
+      } else {
+        const change = paymentAmount - totalPrice;
+        message.textContent = `Pembayaran berhasil! Kembalian Anda: Rp ${change.toLocaleString()}.`;
+        message.className = "success";
+      }
+    }
+  </script>
+</body>
+
+</html>
